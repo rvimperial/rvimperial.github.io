@@ -5,24 +5,928 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Collections Dashboard</title>
 <script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+/* Locked checkbox (looks enabled but not clickable) */
+.locked-checkbox {
+  pointer-events: none;
+}
+
+/* Animation styles */
+.collection-table {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.4s ease;
+  display: none;
+}
+
+.collection-table.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
 </head>
+
 <body class="bg-green-50 text-gray-800">
-    <header class="bg-green-700 text-white">
-      <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-        <h1 class="text-xl font-semibold">Montville Place 2 HOA</h1>
-        <nav class="hidden md:flex space-x-6">
-          <a href="../index.html" class="hover:text-green-200">Home</a>
-          <a href="financials.html" class="hover:text-green-200">Financial Reports</a>
-          <a href="collections.html" class="hover:text-green-200">Collections</a>
-          <a href="activities.html" class="hover:text-green-200">Activities</a>
-          <a href="contact.html" class="hover:text-green-200">Contact</a>
-        </nav>
-      </div>
-    </header>
-    <div class="px-4 mt-8">    
+
+<header class="bg-green-700 text-white">
+  <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+    <h1 class="text-xl font-semibold">Montville Place 2 HOA</h1>
+    <nav class="hidden md:flex space-x-6">
+      <a href="../index.html" class="hover:text-green-200">Home</a>
+      <a href="financials.html" class="hover:text-green-200">Financial Reports</a>
+      <a href="collections.html" class="hover:text-green-200">Collections</a>
+      <a href="activities.html" class="hover:text-green-200">Activities</a>
+      <a href="contact.html" class="hover:text-green-200">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<div class="px-4 mt-8">
 
 <h1 class="text-3xl font-bold text-green-800 mb-4">Collections Dashboard</h1>
-<p class="text-gray-700 mb-6">Content section for Collections Dashboard.</p>
-<a href="../index.html" class="text-green-700 font-medium">← Back to Home</a>
+
+<label for="collection-type" class="block text-gray-700 font-medium mb-2">
+  Select Collection Type:
+</label>
+
+<select id="collection-type" class="border border-gray-300 rounded px-3 py-2 mb-6">
+  <option value="monthly-dues" selected>Monthly Dues</option>
+  <option value="water-bill">Water Bill</option>
+  <option value="parking">Parking</option>
+</select>
+
+<!-- ================= MONTHLY DUES TABLE ================= -->
+<div id="monthly-dues-table" class="collection-table active">
+  <h2 class="text-2xl font-semibold text-green-700 mb-4">Monthly Dues Summary</h2>
+  <h3 class="text-1xl mb-4">* Updated as of February 24, 2026</h2>
+  <table class="table-auto border-collapse border border-gray-300 text-sm text-left">
+    <thead>
+      <tr>
+        <th class="border px-4 py-2">Block/Lot</th>
+        <th class="border px-4 py-2">January</th>
+        <th class="border px-4 py-2">February</th>
+        <th class="border px-4 py-2">March</th>
+        <th class="border px-4 py-2">April</th>
+        <th class="border px-4 py-2">May</th>
+        <th class="border px-4 py-2">June</th>
+        <th class="border px-4 py-2">July</th>
+        <th class="border px-4 py-2">August</th>
+        <th class="border px-4 py-2">September</th>
+        <th class="border px-4 py-2">October</th>
+        <th class="border px-4 py-2">November</th>
+        <th class="border px-4 py-2">December</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <!-- ================= BLOCK 1 ================= -->
+      <tr class="bg-green-100 font-semibold">
+        <td class="border px-4 py-2">Block 1 (500 per month)</td>
+        <td colspan="12" class="border"></td>
+      </tr>
+      
+      <!-- Lots 1–15 -->
+      <!-- Repeat pattern -->
+      <tr>
+        <td class="border px-4 py-2">Lot 1</td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+      </tr>
+      <tr>
+        <td class="border px-4 py-2">Lot 2</td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        
+      </tr>
+      <tr>
+        <td class="border px-4 py-2">Lot 3</td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        </td>
+      </tr>
+      <tr>
+        <td class="border px-4 py-2">Lot 4</td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        </td>
+      </tr>
+      <tr>
+        <td class="border px-4 py-2">Lot 5</td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        </td>
+      </tr>
+      <tr>
+        <td class="border px-4 py-2">Lot 6</td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        </td>
+      </tr>
+      <tr>
+        <td class="border px-4 py-2">Lot 7</td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        </td>
+      </tr>
+      <tr>
+        <td class="border px-4 py-2">Lot 8</td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        </td>
+      </tr>
+      <tr>
+        <td class="border px-4 py-2">Lot 9</td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        </td>
+      </tr>
+      <tr>
+        <td class="border px-4 py-2">Lot 10</td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+      </tr>
+      <tr>
+        <td class="border px-4 py-2">Lot 11</td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+      </tr>
+      <tr>
+        <td class="border px-4 py-2">Lot 12</td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+      </tr>
+      <tr>
+        <td class="border px-4 py-2">Lot 13</td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+      </tr>
+      <tr>
+        <td class="border px-4 py-2">Lot 14</td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+      </tr>
+      <tr>
+        <td class="border px-4 py-2">Lot 15</td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+      </tr>
+      
+      <!-- Duplicate this row and change lot number up to Lot 15 -->
+      
+      <tr>
+        <td class="border px-4 py-2 font-semibold">Total Units</td>
+        <td colspan="12" class="border px-4 py-2 text-center font-semibold">15</td>
+      </tr>
+      
+      
+      <!-- ================= BLOCK 2 ================= -->
+      <tr class="bg-green-100 font-semibold">
+        <td class="border px-4 py-2">Block 2 (1000 per month)</td>
+        <td colspan="12" class="border"></td>
+      </tr>
+      
+      <tr><td class="border px-4 py-2">Lot 1</td>        
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td></tr>
+      <tr><td class="border px-4 py-2">Lot 2</td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td></td></tr>
+      <tr><td class="border px-4 py-2">Lot 3</td>        
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td></td></tr>
+      <tr><td class="border px-4 py-2">Lot 4</td>        
+        <td class="border px-4 py-2 text-center">
+          <input type="checkbox" class="locked-checkbox"  checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" ></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center">
+          <input type="checkbox" class="locked-checkbox"></td></td></tr>
+      <tr>
+        <td class="border px-4 py-2">Lot 5</td>        
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"  checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td></td></tr>
+      <tr><td class="border px-4 py-2">Lot 6</td>        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"  checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td></td></tr>
+      <tr><td class="border px-4 py-2">Lot 7</td>        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"  checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td></td></tr>
+      <tr><td class="border px-4 py-2">Lot 8</td>        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"  checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"  checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td></td></tr>
+      <tr><td class="border px-4 py-2">Lot 9</td>        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"  checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"  checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td></td></tr>
+      <tr><td class="border px-4 py-2">Lot 10A</td>        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"  checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"  checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td></td></tr>
+      <tr><td class="border px-4 py-2">Lot 10B</td>        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"  checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td></td></tr>
+      
+      <tr>
+        <td class="border px-4 py-2 font-semibold">Total Units</td>
+        <td colspan="12" class="border px-4 py-2 text-center font-semibold">11</td>
+      </tr>
+      
+      
+      <!-- ================= BLOCK 3 ================= -->
+      <tr class="bg-green-100 font-semibold">
+        <td class="border px-4 py-2">Block 3 (1000 per month)</td>
+        <td colspan="12" class="border"></td>
+      </tr>
+      
+      <tr><td class="border px-4 py-2">Lot 1</td>        
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td></td></tr>
+      <tr><td class="border px-4 py-2">Lot 2</td>        
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td></td></tr>
+      <tr><td class="border px-4 py-2">Lot 3</td>        
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td></td></tr>
+      <tr><td class="border px-4 py-2">Lot 4</td>        
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td></td></tr>
+      <tr><td class="border px-4 py-2">Lot 5</td>        
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td></td></tr>
+      <tr><td class="border px-4 py-2">Lot 6</td>        
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td></td></tr>
+      
+      <tr>
+        <td class="border px-4 py-2 font-semibold">Total Units</td>
+        <td colspan="12" class="border px-4 py-2 text-center font-semibold">6</td>
+      </tr>
+      
+      
+      <!-- ================= BLOCK 4 ================= -->
+      <tr class="bg-green-100 font-semibold">
+        <td class="border px-4 py-2">Block 4 (1000 per month)</td>
+        <td colspan="12" class="border"></td>
+      </tr>
+      
+      <tr><td class="border px-4 py-2">Lot 1</td>        
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td></td></tr>
+      <tr><td class="border px-4 py-2">Lot 2</td>        
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td></td></tr>
+      <tr><td class="border px-4 py-2">Lot 3</td>        
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td></td></tr>
+      <tr><td class="border px-4 py-2">Lot 4</td>        
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td></td></tr>
+      <tr><td class="border px-4 py-2">Lot 5</td>        
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td></td></tr>
+      <tr><td class="border px-4 py-2">Lot 6</td>        
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td></td></tr>
+      
+      <tr>
+        <td class="border px-4 py-2 font-semibold">Total Units</td>
+        <td colspan="12" class="border px-4 py-2 text-center font-semibold">6</td>
+      </tr>
+      
+      
+      <!-- ================= BLOCK 5 ================= -->
+      <tr class="bg-green-100 font-semibold">
+        <td class="border px-4 py-2">Block 5 (1000 per month)</td>
+        <td colspan="12" class="border"></td>
+      </tr>
+      
+      <tr><td class="border px-4 py-2">Lot 1</td>        
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td></td></tr>
+      <tr><td class="border px-4 py-2">Lot 2</td>       
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td></td></tr>
+      <tr><td class="border px-4 py-2">Lot 3</td>        
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td></td></tr>
+      <tr><td class="border px-4 py-2">Lot 4</td>        
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td></td></tr>
+      <tr><td class="border px-4 py-2">Lot 5</td>        
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td></td></tr>
+      <tr><td class="border px-4 py-2">Lot 6</td>        
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td></td></tr>
+        <tr>
+          <td class="border px-4 py-2 font-semibold">Total Units</td>
+          <td colspan="12" class="border px-4 py-2 text-center font-semibold">6</td>
+        </tr>
+      
+      <!-- ================= BLOCK 6 ================= -->
+      <tr class="bg-green-100 font-semibold">
+        <td class="border px-4 py-2">Block 6 (1000 per month)</td>
+        <td colspan="12" class="border"></td>
+      </tr>
+      
+      <tr><td class="border px-4 py-2">Lot 1</td>        
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td></td></tr>
+      <tr><td class="border px-4 py-2">Lot 2</td>        
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td></td></tr>
+      <tr><td class="border px-4 py-2">Lot 3</td>        
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td></td></tr>
+      <tr><td class="border px-4 py-2">Lot 4A</td>       
+         <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td></td></tr>
+      <tr><td class="border px-4 py-2">Lot 4B</td>        
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td></td></tr>
+      <tr><td class="border px-4 py-2">Lot 4C</td>       
+         <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td>
+        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox"></td></td></tr>
+      
+      <tr>
+        <td class="border px-4 py-2 font-semibold">Total Units</td>
+        <td colspan="12" class="border px-4 py-2 text-center font-semibold">6</td>
+      </tr>
+      
+      <!-- ================= GRAND TOTAL ================= -->
+      <tr class="bg-green-200 font-bold">
+        <td class="border px-4 py-2">Total no. of Units</td>
+        <td colspan="12" class="border px-4 py-2 text-center">50</td>
+      </tr>
+      
+      </tbody>
+  </table>
+</div>
+
+<!-- ================= WATER BILL TABLE ================= -->
+<div id="water-bill-table" class="collection-table">
+  <h2 class="text-2xl font-semibold text-green-700 mb-4">Water Bill Summary</h2>
+  <table class="table-auto border-collapse border border-gray-300 text-sm text-left w-full">
+    <thead>
+      <tr>
+        <th class="border px-4 py-2">Block/Lot</th>
+        <th class="border px-4 py-2">January</th>
+        <th class="border px-4 py-2">February</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="border px-4 py-2">Block 1 Lot 1</td>
+        <td class="border px-4 py-2 text-center">
+          <input type="checkbox">
+        </td>
+        <td class="border px-4 py-2 text-center">
+          <input type="checkbox">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ================= PARKING TABLE ================= -->
+<div id="parking-table" class="collection-table">
+  <h2 class="text-2xl font-semibold text-green-700 mb-4">Parking Summary</h2>
+  <table class="table-auto border-collapse border border-gray-300 text-sm text-left w-full">
+    <thead>
+      <tr>
+        <th class="border px-4 py-2">Block/Lot</th>
+        <th class="border px-4 py-2">Slot A</th>
+        <th class="border px-4 py-2">Slot B</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="border px-4 py-2">Block 1 Lot 1</td>
+        <td class="border px-4 py-2 text-center">
+          <input type="checkbox">
+        </td>
+        <td class="border px-4 py-2 text-center">
+          <input type="checkbox">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</div>
+<br />
+<a href="../index.html" class="text-green-700 font-medium ml-4">
+  ← Back to Home
+</a>
+
+<!-- ================= JAVASCRIPT ================= -->
+<script>
+const select = document.getElementById("collection-type");
+const tables = document.querySelectorAll(".collection-table");
+
+select.addEventListener("change", function () {
+  tables.forEach(table => {
+    table.classList.remove("active");
+  });
+
+  const activeTable = document.getElementById(select.value + "-table");
+  if (activeTable) {
+    activeTable.classList.add("active");
+  }
+});
+</script>
+
 </body>
 </html>

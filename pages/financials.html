@@ -1,106 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Financials - Montville Place 2 HOA</title>
 
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Financials</title>
-        <script src="https://cdn.tailwindcss.com"></script>
-    </head>
-        <body class="bg-green-50 text-gray-800">
-            <header class="bg-green-700 text-white">
-              <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-                
-                <!-- Logo / Title -->
-                <h1 class="text-xl font-semibold">Montville Place 2 HOA</h1>
-            
-                <!-- Mobile Button -->
-                <button id="menu-toggle" class="md:hidden text-white focus:outline-none">
-                  ☰
-                </button>
-            
-                <!-- Desktop Menu -->
-                <nav class="hidden md:block">
-                  <ul class="flex space-x-8 font-medium">
-                    <li><a href="/index.html" class="hover:text-green-200">Home</a></li>
-                    <li><a href="/pages/financials.html" class="hover:text-green-200">Financial Reports</a></li>
-                    <li><a href="/pages/collections.html" class="hover:text-green-200">Collections</a></li>
-                    <li><a href="/pages/activities.html" class="hover:text-green-200">Activities</a></li>
-                    <li><a href="/pages/contact.html" class="hover:text-green-200">Contact</a></li>
-                  </ul>
-                </nav>
-              </div>
-            
-              <!-- Mobile Dropdown -->
-              <div id="mobile-menu" class="hidden md:hidden bg-green-600">
-                <ul class="flex flex-col space-y-3 px-4 py-4 font-medium">
-                  <li><a href="/index.html" class="block hover:text-green-200">Home</a></li>
-                  <li><a href="/pages/financials.html" class="block hover:text-green-200">Financial Reports</a></li>
-                  <li><a href="/pages/collections.html" class="block hover:text-green-200">Collections</a></li>
-                  <li><a href="/pages/activities.html" class="block hover:text-green-200">Activities</a></li>
-                  <li><a href="/pages/contact.html" class="block hover:text-green-200">Contact</a></li>
-                </ul>
-              </div>
-            </header>
-        <div class="px-4 mt-8">    
-        <h1 class="text-3xl font-bold text-green-800 mb-4">Financials</h1>
-        <p class="text-gray-700 mb-6">Select a month to view the financials.</p>
+  <script src="https://cdn.tailwindcss.com"></script>
 
-        <div class="mb-4">
-            <p class="text-red-600 font-semibold mb-2">Note: Financial statements are updated every end of month.</p>
-            <label for="monthSelect" class="block text-gray-700 font-medium mb-2">Choose a month:</label>
-            <select id="monthSelect" class="border border-gray-300 rounded px-3 py-2">
-                <option value="January">January</option>
-                <option value="February">February</option>
-                <option value="March">March</option>
-                <option value="April">April</option>
-                <option value="May">May</option>
-                <option value="June">June</option>
-                <option value="July">July</option>
-                <option value="August">August</option>
-                <option value="September">September</option>
-                <option value="October">October</option>
-                <option value="November">November</option>
-                <option value="December">December</option>
-            </select>
-        </div>
+  <style>
+    img {
+      width: 40%;
+      height: auto;
+    }
+  </style>
+</head>
 
-        <div id="tableContainer" class="mt-6">
-            <!-- Image or message will be rendered here -->
-        </div>
+<body class="bg-green-50 text-gray-800">
 
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                const monthSelect = document.getElementById("monthSelect");
-                const tableContainer = document.getElementById("tableContainer");
+  <!-- HEADER -->
+  <header class="bg-green-700 text-white">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+      <h1 class="text-xl font-semibold">Montville Place 2 HOA</h1>
 
-                const images = {
-                    February: "../images/Montille_FS_FEB.png"                    // Add paths for other months
-                };
+      <button id="menu-toggle" class="md:hidden text-white focus:outline-none">
+        ☰
+      </button>
 
-                monthSelect.addEventListener("change", function () {
-                    const selectedMonth = monthSelect.value;
-                    const imagePath = images[selectedMonth] || "";
-                    renderImage(imagePath);
-                });
+      <nav class="hidden md:block">
+        <ul class="flex space-x-8 font-medium">
+          <li><a href="../index.html" class="hover:text-green-200">Home</a></li>
+          <li><a href="financials.html" class="hover:text-green-200">Financial Reports</a></li>
+          <li><a href="collections.html" class="hover:text-green-200">Collections</a></li>
+          <li><a href="activities.html" class="hover:text-green-200">Activities</a></li>
+          <li><a href="contact.html" class="hover:text-green-200">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
 
-                function renderImage(imagePath) {
-                    if (imagePath) {
-                        tableContainer.innerHTML = `<img src="${imagePath}" alt="Financials for ${monthSelect.value}" class="w-1/2 h-auto border border-green-600 rounded">`;     } else {
-                        tableContainer.innerHTML = "<p class='text-gray-700'>No financials available for this month.</p>";
-                    }
-                }
+    <div id="mobile-menu" class="hidden md:hidden bg-green-600">
+      <ul class="flex flex-col space-y-3 px-4 py-4 font-medium">
+        <li><a href="../index.html" class="block hover:text-green-200">Home</a></li>
+        <li><a href="financials.html" class="block hover:text-green-200">Financial Reports</a></li>
+        <li><a href="collections.html" class="block hover:text-green-200">Collections</a></li>
+        <li><a href="activities.html" class="block hover:text-green-200">Activities</a></li>
+        <li><a href="contact.html" class="block hover:text-green-200">Contact</a></li>
+      </ul>
+    </div>
+  </header>
 
-                // Initialize with the first month's image
-                renderImage(images[monthSelect.value]);
-            });
-        </script>
-    </body>
-    </html>
-    <style>
-        img {
-            width: 30%;
-            height: auto;
+  <!-- CONTENT -->
+  <div class="max-w-6xl mx-auto px-4 mt-8">
+
+    <h1 class="text-3xl font-bold text-green-800 mb-4">Financials</h1>
+    <p class="text-gray-700 mb-6">Select a month to view the financials.</p>
+
+    <p class="text-red-600 font-semibold mb-4">
+      Note: Financial statements are updated every end of month.
+    </p>
+
+    <label for="monthSelect" class="block text-gray-700 font-medium mb-2">
+      Choose a month:
+    </label>
+
+    <select id="monthSelect" class="border border-gray-300 rounded px-3 py-2">
+      <option value="">-- Select Month --</option>
+      <option value="January">January</option>
+      <option value="February">February</option>
+      <option value="March">March</option>
+      <option value="April">April</option>
+      <option value="May">May</option>
+      <option value="June">June</option>
+      <option value="July">July</option>
+      <option value="August">August</option>
+      <option value="September">September</option>
+      <option value="October">October</option>
+      <option value="November">November</option>
+      <option value="December">December</option>
+    </select>
+
+    <div id="tableContainer" class="mt-6"></div>
+
+    <a href="../index.html" class="text-green-700 font-medium mt-8 block">
+      ← Back to Home
+    </a>
+
+  </div>
+
+  <!-- SCRIPTS -->
+  <script>
+    // Mobile Menu
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    if (menuToggle) {
+      menuToggle.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+    }
+
+    // Financial Images
+    document.addEventListener("DOMContentLoaded", function () {
+
+      const monthSelect = document.getElementById("monthSelect");
+      const tableContainer = document.getElementById("tableContainer");
+
+      const images = {
+        January: "../images/Montille_FS_JAN.png",
+        February: "../images/Montille_FS_FEB.png",
+        March: "../images/Montille_FS_MAR.png",
+        April: "../images/Montille_FS_APR.png",
+        May: "../images/Montille_FS_MAY.png",
+        June: "../images/Montille_FS_JUN.png",
+        July: "../images/Montille_FS_JUL.png",
+        August: "../images/Montille_FS_AUG.png",
+        September: "../images/Montille_FS_SEP.png",
+        October: "../images/Montille_FS_OCT.png",
+        November: "../images/Montille_FS_NOV.png",
+        December: "../images/Montille_FS_DEC.png"
+      };
+
+      monthSelect.addEventListener("change", function () {
+        const selectedMonth = monthSelect.value;
+        const imagePath = images[selectedMonth] || "";
+
+        if (imagePath) {
+          tableContainer.innerHTML = `
+            <img src="${imagePath}" 
+                 alt="Financials for ${selectedMonth}" 
+                 class="border border-green-600 rounded shadow">
+          `;
+        } else {
+          tableContainer.innerHTML =
+            "<p class='text-gray-700'>No financials available for this month.</p>";
         }
-    </style>
-    <a href="../index.html" class="text-green-700 font-medium mt-4 block">← Back to Home</a>
+      });
+
+    });
+  </script>
+
+</body>
+</html>

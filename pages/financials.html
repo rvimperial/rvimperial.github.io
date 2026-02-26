@@ -12,6 +12,15 @@
       width: 40%;
       height: auto;
     }
+
+    /* Hide scrollbar but keep scrolling */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
   </style>
 </head>
 
@@ -54,10 +63,6 @@
     <h1 class="text-3xl font-bold text-green-800 mb-4">Financials</h1>
     <p class="text-gray-700 mb-6">Select a month to view the financials.</p>
 
-    <p class="text-red-600 font-semibold mb-4">
-      Note: Financial statements are updated every end of month.
-    </p>
-
     <label for="monthSelect" class="block text-gray-700 font-medium mb-2">
       Choose a month:
     </label>
@@ -80,61 +85,121 @@
 
     <div id="tableContainer" class="mt-6"></div>
 
-    <a href="../index.html" class="text-green-700 font-medium mt-8 block">
-      ← Back to Home
-    </a>
+  </div>
+
+  <!-- ZOOMABLE MODAL -->
+  <div id="imageModal" class="fixed inset-0 bg-black bg-opacity-90 hidden z-50 flex flex-col">
+
+    <!-- Top Bar -->
+    <div class="flex justify-between items-center p-4 text-white">
+      <div class="space-x-3">
+        <button id="zoomIn" class="bg-white text-black px-3 py-1 rounded">+</button>
+        <button id="zoomOut" class="bg-white text-black px-3 py-1 rounded">-</button>
+        <button id="resetZoom" class="bg-white text-black px-3 py-1 rounded">Reset</button>
+      </div>
+      <button id="closeModal" class="text-3xl">&times;</button>
+    </div>
+
+    <!-- Scrollable Image Container -->
+    <div id="modalContainer"
+         class="flex-1 overflow-auto no-scrollbar flex items-center justify-center">
+
+      <img id="modalImage"
+           class="transition-transform duration-200 select-none"
+           style="transform: scale(1); max-width: none;">
+    </div>
 
   </div>
 
-  <!-- SCRIPTS -->
   <script>
-    // Mobile Menu
-    const menuToggle = document.getElementById('menu-toggle');
-    const mobileMenu = document.getElementById('mobile-menu');
+    const monthSelect = document.getElementById("monthSelect");
+    const tableContainer = document.getElementById("tableContainer");
 
-    if (menuToggle) {
-      menuToggle.addEventListener('click', () => {
-        mobileMenu.classList.toggle('hidden');
-      });
-    }
+    const modal = document.getElementById("imageModal");
+    const modalImage = document.getElementById("modalImage");
+    const closeModal = document.getElementById("closeModal");
+    const zoomIn = document.getElementById("zoomIn");
+    const zoomOut = document.getElementById("zoomOut");
+    const resetZoom = document.getElementById("resetZoom");
 
-    // Financial Images
-    document.addEventListener("DOMContentLoaded", function () {
+    let scale = 1;
 
-      const monthSelect = document.getElementById("monthSelect");
-      const tableContainer = document.getElementById("tableContainer");
+    const images = {
+      January: "../images/Montille_FS_JAN.png",
+      February: "../images/Montille_FS_FEB.png",
+      March: "../images/Montille_FS_MAR.png",
+      April: "../images/Montille_FS_APR.png",
+      May: "../images/Montille_FS_MAY.png",
+      June: "../images/Montille_FS_JUN.png",
+      July: "../images/Montille_FS_JUL.png",
+      August: "../images/Montille_FS_AUG.png",
+      September: "../images/Montille_FS_SEP.png",
+      October: "../images/Montille_FS_OCT.png",
+      November: "../images/Montille_FS_NOV.png",
+      December: "../images/Montille_FS_DEC.png"
+    };
 
-      const images = {
-        January: "../images/Montille_FS_JAN.png",
-        February: "../images/Montille_FS_FEB.png",
-        March: "../images/Montille_FS_MAR.png",
-        April: "../images/Montille_FS_APR.png",
-        May: "../images/Montille_FS_MAY.png",
-        June: "../images/Montille_FS_JUN.png",
-        July: "../images/Montille_FS_JUL.png",
-        August: "../images/Montille_FS_AUG.png",
-        September: "../images/Montille_FS_SEP.png",
-        October: "../images/Montille_FS_OCT.png",
-        November: "../images/Montille_FS_NOV.png",
-        December: "../images/Montille_FS_DEC.png"
-      };
+    monthSelect.addEventListener("change", function () {
+      const imagePath = images[this.value] || "";
+      if (imagePath) {
+        tableContainer.innerHTML = `
+          <img src="${imagePath}"
+               class="border border-green-600 rounded shadow cursor-pointer hover:scale-105 transition"
+               id="previewImage">
+        `;
+      } else {
+        tableContainer.innerHTML = "";
+      }
+    });
 
-      monthSelect.addEventListener("change", function () {
-        const selectedMonth = monthSelect.value;
-        const imagePath = images[selectedMonth] || "";
+    tableContainer.addEventListener("click", function (e) {
+      if (e.target.id === "previewImage") {
+        modalImage.src = e.target.src;
+        modal.classList.remove("hidden");
+        scale = 1;
+        modalImage.style.transform = "scale(1)";
+      }
+    });
 
-        if (imagePath) {
-          tableContainer.innerHTML = `
-            <img src="${imagePath}" 
-                 alt="Financials for ${selectedMonth}" 
-                 class="border border-green-600 rounded shadow">
-          `;
-        } else {
-          tableContainer.innerHTML =
-            "<p class='text-gray-700'>No financials available for this month.</p>";
-        }
-      });
+    zoomIn.addEventListener("click", () => {
+      scale += 0.2;
+      modalImage.style.transform = `scale(${scale})`;
+    });
 
+    zoomOut.addEventListener("click", () => {
+      if (scale > 0.4) {
+        scale -= 0.2;
+        modalImage.style.transform = `scale(${scale})`;
+      }
+    });
+
+    resetZoom.addEventListener("click", () => {
+      scale = 1;
+      modalImage.style.transform = "scale(1)";
+    });
+
+    closeModal.addEventListener("click", () => {
+      modal.classList.add("hidden");
+    });
+
+    modal.addEventListener("click", function (e) {
+      if (e.target === modal) {
+        modal.classList.add("hidden");
+      }
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") {
+        modal.classList.add("hidden");
+      }
+    });
+
+    // Mobile pinch zoom support
+    modalImage.addEventListener("wheel", function (e) {
+      e.preventDefault();
+      scale += e.deltaY * -0.001;
+      scale = Math.min(Math.max(.5, scale), 5);
+      modalImage.style.transform = `scale(${scale})`;
     });
   </script>
 

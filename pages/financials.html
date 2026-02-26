@@ -13,7 +13,6 @@
       height: auto;
     }
 
-    /* Hide scrollbar but keep scrolling */
     .no-scrollbar::-webkit-scrollbar {
       display: none;
     }
@@ -61,7 +60,6 @@
   <div class="max-w-6xl mx-auto px-4 mt-8">
 
     <h1 class="text-3xl font-bold text-green-800 mb-4">Financials</h1>
-    <p class="text-gray-700 mb-6">Select a month to view the financials.</p>
 
     <label for="monthSelect" class="block text-gray-700 font-medium mb-2">
       Choose a month:
@@ -87,10 +85,10 @@
 
   </div>
 
-  <!-- ZOOMABLE MODAL -->
+  <!-- MODAL -->
   <div id="imageModal" class="fixed inset-0 bg-black bg-opacity-90 hidden z-50 flex flex-col">
 
-    <!-- Top Bar -->
+    <!-- Controls -->
     <div class="flex justify-between items-center p-4 text-white">
       <div class="space-x-3">
         <button id="zoomIn" class="bg-white text-black px-3 py-1 rounded">+</button>
@@ -100,22 +98,35 @@
       <button id="closeModal" class="text-3xl">&times;</button>
     </div>
 
-    <!-- Scrollable Image Container -->
-    <div id="modalContainer" class="flex-1 overflow-auto no-scrollbar">
+    <!-- Scroll Container -->
+    <div id="modalContainer"
+         class="flex-1 overflow-auto no-scrollbar flex items-center justify-center">
 
-        <img id="modalImage"
-        class="transition-transform duration-200 select-none block"
-        style="transform: scale(1); max-width: none;">
+      <img id="modalImage"
+           class="transition-transform duration-200 select-none"
+           style="transform: scale(1); transform-origin: top left; max-width: none;">
     </div>
 
   </div>
 
   <script>
+    // MOBILE MENU
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    if (menuToggle) {
+      menuToggle.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+    }
+
     const monthSelect = document.getElementById("monthSelect");
     const tableContainer = document.getElementById("tableContainer");
 
     const modal = document.getElementById("imageModal");
     const modalImage = document.getElementById("modalImage");
+    const modalContainer = document.getElementById("modalContainer");
+
     const closeModal = document.getElementById("closeModal");
     const zoomIn = document.getElementById("zoomIn");
     const zoomOut = document.getElementById("zoomOut");
@@ -138,6 +149,10 @@
       December: "../images/Montille_FS_DEC.png"
     };
 
+    function applyZoom() {
+      modalImage.style.transform = `scale(${scale})`;
+    }
+
     monthSelect.addEventListener("change", function () {
       const imagePath = images[this.value] || "";
       if (imagePath) {
@@ -156,25 +171,36 @@
         modalImage.src = e.target.src;
         modal.classList.remove("hidden");
         scale = 1;
-        modalImage.style.transform = "scale(1)";
+        applyZoom();
+        modalContainer.scrollTop = 0;
+        modalContainer.scrollLeft = 0;
       }
     });
 
     zoomIn.addEventListener("click", () => {
       scale += 0.2;
-      modalImage.style.transform = `scale(${scale})`;
+      applyZoom();
     });
 
     zoomOut.addEventListener("click", () => {
-      if (scale > 0.4) {
+      if (scale > 0.5) {
         scale -= 0.2;
-        modalImage.style.transform = `scale(${scale})`;
+        applyZoom();
       }
     });
 
     resetZoom.addEventListener("click", () => {
       scale = 1;
-      modalImage.style.transform = "scale(1)";
+      applyZoom();
+      modalContainer.scrollTop = 0;
+      modalContainer.scrollLeft = 0;
+    });
+
+    modalImage.addEventListener("wheel", function (e) {
+      e.preventDefault();
+      scale += e.deltaY * -0.001;
+      scale = Math.min(Math.max(0.5, scale), 5);
+      applyZoom();
     });
 
     closeModal.addEventListener("click", () => {
@@ -191,14 +217,6 @@
       if (e.key === "Escape") {
         modal.classList.add("hidden");
       }
-    });
-
-    // Mobile pinch zoom support
-    modalImage.addEventListener("wheel", function (e) {
-      e.preventDefault();
-      scale += e.deltaY * -0.001;
-      scale = Math.min(Math.max(.5, scale), 5);
-      modalImage.style.transform = `scale(${scale})`;
     });
   </script>
 

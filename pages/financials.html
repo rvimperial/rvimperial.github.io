@@ -152,16 +152,13 @@ const images = {
   December: "../images/Montille_FS_DEC.png"
 };
 
-function applyZoom() {
-  modalImage.style.width = baseWidth * scale + "px";
-}
-
 monthSelect.addEventListener("change", function () {
   const imagePath = images[this.value] || "";
   if (imagePath) {
     tableContainer.innerHTML = `
       <img src="${imagePath}"
-           class="border border-green-600 rounded shadow cursor-pointer hover:scale-105 transition"
+           class="border border-green-600 rounded shadow cursor-pointer transition transform"
+           style="width: 1200px; height: auto;"
            id="previewImage">
     `;
   } else {
@@ -169,68 +166,8 @@ monthSelect.addEventListener("change", function () {
   }
 });
 
-tableContainer.addEventListener("click", function (e) {
-  if (e.target.id === "previewImage") {
 
-    modalImage.onload = function () {
 
-      baseWidth = modalImage.naturalWidth;
-
-      modal.classList.remove("hidden");
-
-      scale = 1;
-      //applyZoom();
-
-      // Center correctly
-      modalContainer.scrollLeft =
-        (modalImage.scrollWidth - modalContainer.clientWidth) / 2;
-
-      modalContainer.scrollTop =
-        (modalImage.scrollHeight - modalContainer.clientHeight) / 2;
-    };
-
-    modalImage.src = e.target.src;
-  }
-});
-
-zoomIn.addEventListener("click", () => {
-  scale += 0.2;
-  applyZoom();
-});
-
-zoomOut.addEventListener("click", () => {
-  if (scale > 0.5) {
-    scale -= 0.2;
-    applyZoom();
-  }
-});
-
-resetZoom.addEventListener("click", () => {
-  scale = 1;
-  applyZoom();
-
-  modalContainer.scrollLeft =
-    (modalImage.scrollWidth - modalContainer.clientWidth) / 2;
-
-  modalContainer.scrollTop =
-    (modalImage.scrollHeight - modalContainer.clientHeight) / 2;
-});
-
-closeModal.addEventListener("click", () => {
-  modal.classList.add("hidden");
-});
-
-modal.addEventListener("click", function (e) {
-  if (e.target === modal) {
-    modal.classList.add("hidden");
-  }
-});
-
-document.addEventListener("keydown", function (e) {
-  if (e.key === "Escape") {
-    modal.classList.add("hidden");
-  }
-});
 
 </script>
 

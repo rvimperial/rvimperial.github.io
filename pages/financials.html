@@ -138,18 +138,18 @@ let scale = 1;
 let baseWidth = 0;
 
 const images = {
-  January: "../images/Montille_FS_JAN.png",
-  February: "../images/Montille_FS_FEB.png",
-  March: "../images/Montille_FS_MAR.png",
-  April: "../images/Montille_FS_APR.png",
-  May: "../images/Montille_FS_MAY.png",
-  June: "../images/Montille_FS_JUN.png",
-  July: "../images/Montille_FS_JUL.png",
-  August: "../images/Montille_FS_AUG.png",
-  September: "../images/Montille_FS_SEP.png",
-  October: "../images/Montille_FS_OCT.png",
-  November: "../images/Montille_FS_NOV.png",
-  December: "../images/Montille_FS_DEC.png"
+  January   : false,
+  February  : "../images/Montille_FS_FEB.png",
+  March     : false,
+  April     : false,
+  May       : false,
+  June      : false,
+  July      : false,
+  August    : false,
+  September : false,
+  October   : false,
+  November  : false,
+  December  : false
 };
 
 monthSelect.addEventListener("change", function () {
@@ -157,12 +157,12 @@ monthSelect.addEventListener("change", function () {
   if (imagePath) {
     tableContainer.innerHTML = `
       <img src="${imagePath}"
-           class="border border-green-600 rounded shadow cursor-pointer transition transform"
-           style="width: 1200px; height: auto;"
+           class="border border-green-600 rounded shadow cursor-pointer transition transform w-full max-w-[1200px] mx-auto"
+           style="height: auto;"
            id="previewImage">
     `;
   } else {
-    tableContainer.innerHTML = "";
+    tableContainer.innerHTML = "No reports found.";
   }
 });
 

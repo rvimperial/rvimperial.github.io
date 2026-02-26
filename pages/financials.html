@@ -133,6 +133,7 @@
     const resetZoom = document.getElementById("resetZoom");
 
     let scale = 1;
+    let baseWidth = 0;
 
     const images = {
       January: "../images/Montille_FS_JAN.png",
@@ -150,8 +151,8 @@
     };
 
     function applyZoom() {
-      modalImage.style.transform = `scale(${scale})`;
-    }
+  modalImage.style.width = baseWidth * scale + "px";
+}
 
     monthSelect.addEventListener("change", function () {
       const imagePath = images[this.value] || "";
@@ -167,34 +168,45 @@
     });
 
     tableContainer.addEventListener("click", function (e) {
-      if (e.target.id === "previewImage") {
-        modalImage.src = e.target.src;
-        modal.classList.remove("hidden");
-        scale = 1;
-        applyZoom();
-        modalContainer.scrollTop = 0;
-        modalContainer.scrollLeft = 0;
-      }
-    });
+  if (e.target.id === "previewImage") {
 
-    zoomIn.addEventListener("click", () => {
-      scale += 0.2;
+    modalImage.onload = function () {
+
+      baseWidth = modalImage.naturalWidth;
+
+      modal.classList.remove("hidden");
+
+      scale = .5;
       applyZoom();
-    });
 
-    zoomOut.addEventListener("click", () => {
-      if (scale > 0.5) {
-        scale -= 0.2;
-        applyZoom();
-      }
-    });
+      // Now centering works correctly
+      modalContainer.scrollLeft =
+        (modalImage.scrollWidth - modalContainer.clientWidth) / 2;
 
-    resetZoom.addEventListener("click", () => {
-      scale = 1;
-      applyZoom();
-      modalContainer.scrollTop = 0;
-      modalContainer.scrollLeft = 0;
-    });
+      modalContainer.scrollTop =
+        (modalImage.scrollHeight - modalContainer.clientHeight) / 2;
+    };
+
+    modalImage.src = e.target.src;
+  }
+});
+
+zoomIn.addEventListener("click", () => {
+  scale += 0.2;
+  applyZoom();
+});
+
+zoomOut.addEventListener("click", () => {
+  if (scale > 0.5) {
+    scale -= 0.2;
+    applyZoom();
+  }
+});
+
+resetZoom.addEventListener("click", () => {
+  scale = 1;
+  applyZoom();
+});
 
     modalImage.addEventListener("wheel", function (e) {
       e.preventDefault();

@@ -5,6 +5,51 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Collections Dashboard</title>
 <script src="https://cdn.tailwindcss.com"></script>
+
+
+<script>
+let billData = {};
+
+async function loadCSV() {
+    const response = await fetch("waterbill.csv");
+    const csv = await response.text();
+    const lines = csv.trim().split("\n");
+
+    // Skip header
+    for (let i = 1; i < lines.length; i++) {
+        const cols = lines[i].split(",");
+
+        const id = cols[0];
+
+        billData[id] = {
+            lotName: id.replace("/^blk\d+_/", "")
+                       .replace("_", " ")
+                       .replace("lot", "Lot "),
+            months: cols.slice(1)
+        };
+    }
+}
+
+function build_table_row(rowId) {
+    const row = document.getElementById(rowId);
+    const data = billData[rowId];
+
+    if (!row || !data) return;
+
+    const lotDisplayName = "Lot " + data.lotName.replace(/^blk\d+/, "");
+
+    row.innerHTML = `
+        <td class="border px-4 py-2">${lotDisplayName}</td>
+        ${data.months.map(value =>
+            `<td class="border px-4 py-2 text-right">${value || ""}</td>`
+        ).join("")}
+    `;
+}
+</script>
+
+
+
+
 <style>
 /* Locked checkbox (looks enabled but not clickable) */
 .locked-checkbox {
@@ -929,33 +974,33 @@
       <!-- ================= MOTHER METER ================= -->
       <tr>
         <td class="border px-4 py-2">Mother Meter</td>
-        <td class="border px-4 py-2 text-center">67,212.67</td>
-        <td class="border px-4 py-2 text-center">71,864.52</td>
-        <td class="border px-4 py-2 text-center">-</td>
-        <td class="border px-4 py-2 text-center">-</td>
-        <td class="border px-4 py-2 text-center">-</td>
-        <td class="border px-4 py-2 text-center">-</td>
-        <td class="border px-4 py-2 text-center">-</td>
-        <td class="border px-4 py-2 text-center">-</td>
-        <td class="border px-4 py-2 text-center">-</td>
-        <td class="border px-4 py-2 text-center">-</td>
-        <td class="border px-4 py-2 text-center">-</td>
-        <td class="border px-4 py-2 text-center">-</td>
+        <td class="border px-4 py-2 text-right">67,212.67</td>
+        <td class="border px-4 py-2 text-right">71,864.52</td>
+        <td class="border px-4 py-2 text-right">56,100.25</td>
+        <td class="border px-4 py-2 text-right">58,740.13</td>
+        <td class="border px-4 py-2 text-right">-</td>
+        <td class="border px-4 py-2 text-right">-</td>
+        <td class="border px-4 py-2 text-right">-</td>
+        <td class="border px-4 py-2 text-right">-</td>
+        <td class="border px-4 py-2 text-right">-</td>
+        <td class="border px-4 py-2 text-right">-</td>
+        <td class="border px-4 py-2 text-right">-</td>
+        <td class="border px-4 py-2 text-right">-</td>
       </tr>
       <tr>
         <td class="border px-4 py-2">Guard House</td>
-        <td class="border px-4 py-2 text-center">576.93</td>
-        <td class="border px-4 py-2 text-center"><input type="checkbox" class="locked-checkbox" checked> 459.36</td>
-        <td class="border px-4 py-2 text-center">-</td>
-        <td class="border px-4 py-2 text-center">-</td>
-        <td class="border px-4 py-2 text-center">-</td>
-        <td class="border px-4 py-2 text-center">-</td>
-        <td class="border px-4 py-2 text-center">-</td>
-        <td class="border px-4 py-2 text-center">-</td>
-        <td class="border px-4 py-2 text-center">-</td>
-        <td class="border px-4 py-2 text-center">-</td>
-        <td class="border px-4 py-2 text-center">-</td>
-        <td class="border px-4 py-2 text-center">-</td>
+        <td class="border px-4 py-2 text-right">576.93</td>
+        <td class="border px-4 py-2 text-right">459.36</td>
+        <td class="border px-4 py-2 text-right">449.25</td>
+        <td class="border px-4 py-2 text-right">552.13</td>
+        <td class="border px-4 py-2 text-right">-</td>
+        <td class="border px-4 py-2 text-right">-</td>
+        <td class="border px-4 py-2 text-right">-</td>
+        <td class="border px-4 py-2 text-right">-</td>
+        <td class="border px-4 py-2 text-right">-</td>
+        <td class="border px-4 py-2 text-right">-</td>
+        <td class="border px-4 py-2 text-right">-</td>
+        <td class="border px-4 py-2 text-right">-</td>
         
       </tr>
 
@@ -964,483 +1009,84 @@
           <td class="border px-4 py-2">Block 1</td>
           <td colspan="12" class="border"></td>
         </tr>
-        
-        <!-- Lots 1–15 -->
-        <!-- Repeat pattern -->
-        <tr>
-          <td class="border px-4 py-2">Lot 1</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"> -</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox">   1,604.16</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-        </tr>
-        <tr>
-          <td class="border px-4 py-2">Lot 2</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"> -</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox">   1,527.04</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          
-        </tr>
-        <tr>
-          <td class="border px-4 py-2">Lot 3</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"> -</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox">   2,133.91</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          </td>
-        </tr>
-        <tr>
-          <td class="border px-4 py-2">Lot 4</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"> -</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox" checked>  3,448.29</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          </td>
-        </tr>
-        <tr>
-          <td class="border px-4 py-2">Lot 5</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"> -</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox">  867.91</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          </td>
-        </tr>
-        <tr>
-          <td class="border px-4 py-2">Lot 6</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"> -</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox">   455.20</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          </td>
-        </tr>
-        <tr>
-          <td class="border px-4 py-2">Lot 7</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"> -</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox" checked>   1,168.58</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          </td>
-        </tr>
-        <tr>
-          <td class="border px-4 py-2">Lot 8</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox">   1,069.92</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          </td>
-        </tr>
-        <tr>
-          <td class="border px-4 py-2">Lot 9</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox">   0.00</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          </td>
-        </tr>
-        <tr>
-          <td class="border px-4 py-2">Lot 10</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox" checked>   939.36</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-        </tr>
-        <tr>
-          <td class="border px-4 py-2">Lot 11</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox">   1,220.80</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-        </tr>
-        <tr>
-          <td class="border px-4 py-2">Lot 12</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox">   1,303.33</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-        </tr>
-        <tr>
-          <td class="border px-4 py-2">Lot 13</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox" checked>   1,490.24</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-        </tr>
-        <tr>
-          <td class="border px-4 py-2">Lot 14</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox">   1,424.96</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-        </tr>
-        <tr>
-          <td class="border px-4 py-2">Lot 15</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox" checked>   783.74</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-        </tr>
-      
-        
+
+          <script>
+          //BLOCK 1: Lots 1-15
+          for (let i = 1; i <= 15; i++) {
+              document.write(`<tr id="blk1_${i}"></tr>`);
+          }
+          (async () => {
+              await loadCSV();
+              build_table_row("blk1_1");
+              build_table_row("blk1_2");
+              build_table_row("blk1_3");
+              build_table_row("blk1_4");
+              build_table_row("blk1_5");
+              build_table_row("blk1_6");
+              build_table_row("blk1_7");
+              build_table_row("blk1_8");
+              build_table_row("blk1_9");
+              build_table_row("blk1_10");
+              build_table_row("blk1_11");
+              build_table_row("blk1_12");
+              build_table_row("blk1_13");
+              build_table_row("blk1_14");
+              build_table_row("blk1_15");
+          })(); 
+          </script>
+
         <!-- ================= BLOCK 2 ================= -->
         <tr class="bg-green-100 font-semibold">
           <td class="border px-4 py-2">Block 2</td>
           <td colspan="12" class="border"></td>
         </tr>
-        
-        <tr><td class="border px-4 py-2">Lot 1</td>        
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox" checked> 2,108.03</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td></tr>
-        <tr><td class="border px-4 py-2">Lot 2</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"> 1,754.52</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td></td></tr>
-        <tr><td class="border px-4 py-2">Lot 3</td>        
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"> 786.96</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td></td></tr>
-        <tr><td class="border px-4 py-2">Lot 4</td>        
-          <td class="border px-4 py-2 text-left">
-            <input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox" > 3,221.21</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left">
-            <input type="checkbox" class="locked-checkbox"></td></td></tr>
-        <tr>
-          <td class="border px-4 py-2">Lot 5</td>        
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"> 1,739.31</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td></td></tr>
-        <tr><td class="border px-4 py-2">Lot 6</td>        
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"> 1,573.33</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td></td></tr>
-        <tr><td class="border px-4 py-2">Lot 7</td>        
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"> 1,680.16</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td></td></tr>
-        <tr><td class="border px-4 py-2">Lot 8</td>        
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox" ></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox" checked> 1,686.03</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td></td></tr>
-        <tr><td class="border px-4 py-2">Lot 9</td>        
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"> 761.44</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td></td></tr>
-        <tr><td class="border px-4 py-2">Lot 10A</td>        
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"> 1,782.24</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td></td></tr>
-        <tr><td class="border px-4 py-2">Lot 10B</td>        
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"> 1,833.28</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td></td></tr>
-        
-        
+        <script>
+          //BLOCK 2: Lots 1-9, 10A, 10B
+          for (let i = 1; i <= 9; i++) {
+              document.write(`<tr id="blk2_${i}"></tr>`);
+          }
+          
+          document.write(`<tr id="blk2_10A"></tr>`);
+          document.write(`<tr id="blk2_10B"></tr>`);
+
+          (async () => {
+              await loadCSV();
+              build_table_row("blk2_1");
+              build_table_row("blk2_2");
+              build_table_row("blk2_3");
+              build_table_row("blk2_4");
+              build_table_row("blk2_5");
+              build_table_row("blk2_6");
+              build_table_row("blk2_7");
+              build_table_row("blk2_8");
+              build_table_row("blk2_9");
+              build_table_row("blk2_10A");
+              build_table_row("blk2_10B");
+          })(); 
+          </script>
+
         <!-- ================= BLOCK 3 ================= -->
         <tr class="bg-green-100 font-semibold">
           <td class="border px-4 py-2">Block 3</td>
           <td colspan="12" class="border"></td>
         </tr>
         
-        <tr><td class="border px-4 py-2">Lot 1</td>        
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"> 2,205.77</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td></td></tr>
-        <tr><td class="border px-4 py-2">Lot 2</td>        
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"> 1,307.77</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td></td></tr>
-        <tr><td class="border px-4 py-2">Lot 3</td>        
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox" checked> 1,133.57</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td></td></tr>
-        <tr><td class="border px-4 py-2">Lot 4</td>        
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox" checked> 1,165.47</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td></td></tr>
-        <tr><td class="border px-4 py-2">Lot 5</td>        
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"> 1,052.37</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td></td></tr>
-        <tr><td class="border px-4 py-2">Lot 6</td>        
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"> 0.00</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td></td></tr>
-        
+        <script>
+          //BLOCK 3: Lots 1-6
+          for (let i = 1; i <= 6; i++) {
+              document.write(`<tr id="blk3_${i}"></tr>`);
+          }
+
+          (async () => {
+              await loadCSV();
+              build_table_row("blk3_1");
+              build_table_row("blk3_2");
+              build_table_row("blk3_3");
+              build_table_row("blk3_4");
+              build_table_row("blk3_5");
+              build_table_row("blk3_6");
+          })(); 
+          </script>
         
         <!-- ================= BLOCK 4 ================= -->
         <tr class="bg-green-100 font-semibold">
@@ -1448,84 +1094,22 @@
           <td colspan="12" class="border"></td>
         </tr>
         
-        <tr><td class="border px-4 py-2">Lot 1</td>        
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox" checked> 1,499.48</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td></td></tr>
-        <tr><td class="border px-4 py-2">Lot 2</td>        
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"> 1,938.83</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td></td></tr>
-        <tr><td class="border px-4 py-2">Lot 3</td>        
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"> -</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td></td></tr>
-        <tr><td class="border px-4 py-2">Lot 4</td>        
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"> 1,578.08</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td></td></tr>
-        <tr><td class="border px-4 py-2">Lot 5</td>        
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"> 1,393.98</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td></td></tr>
-        <tr><td class="border px-4 py-2">Lot 6</td>        
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"> 1,373.92</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td></td></tr>
+        <script>
+          //BLOCK 4: Lots 1-6
+          for (let i = 1; i <= 6; i++) {
+              document.write(`<tr id="blk4_${i}"></tr>`);
+          }
+
+          (async () => {
+              await loadCSV();
+              build_table_row("blk4_1");
+              build_table_row("blk4_2");
+              build_table_row("blk4_3");
+              build_table_row("blk4_4");
+              build_table_row("blk4_5");
+              build_table_row("blk4_6");
+          })(); 
+          </script>
         
         
         <!-- ================= BLOCK 5 ================= -->
@@ -1534,84 +1118,22 @@
           <td colspan="12" class="border"></td>
         </tr>
         
-        <tr><td class="border px-4 py-2">Lot 1</td>        
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"> 1,808.37</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td></td></tr>
-        <tr><td class="border px-4 py-2">Lot 2</td>       
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox" checked> 914.56</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td></td></tr>
-        <tr><td class="border px-4 py-2">Lot 3</td>        
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"> 1,311.19</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td></td></tr>
-        <tr><td class="border px-4 py-2">Lot 4</td>        
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"> 3,393.27</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td></td></tr>
-        <tr><td class="border px-4 py-2">Lot 5</td>        
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"> 2,190.56</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td></td></tr>
-        <tr><td class="border px-4 py-2">Lot 6</td>        
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox" checked> 863.52</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td></td></tr>
+        <script>
+          //BLOCK 5: Lots 1-6
+          for (let i = 1; i <= 6; i++) {
+              document.write(`<tr id="blk5_${i}"></tr>`);
+          }
+
+          (async () => {
+              await loadCSV();
+              build_table_row("blk5_1");
+              build_table_row("blk5_2");
+              build_table_row("blk5_3");
+              build_table_row("blk5_4");
+              build_table_row("blk5_5");
+              build_table_row("blk5_6");
+          })(); 
+          </script>
         
         <!-- ================= BLOCK 6 ================= -->
         <tr class="bg-green-100 font-semibold">
@@ -1619,84 +1141,25 @@
           <td colspan="12" class="border"></td>
         </tr>
         
-        <tr><td class="border px-4 py-2">Lot 1</td>        
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox" checked> 745.82</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td></td></tr>
-        <tr><td class="border px-4 py-2">Lot 2</td>        
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"> 965.60</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td></td></tr>
-        <tr><td class="border px-4 py-2">Lot 3</td>        
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox" checked> 1,322.88</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td></td></tr>
-        <tr><td class="border px-4 py-2">Lot 4A</td>       
-           <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox" checked> 2,090.83</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td></td></tr>
-        <tr><td class="border px-4 py-2">Lot 4B</td>        
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox" checked> 1,527.04</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td></td></tr>
-        <tr><td class="border px-4 py-2">Lot 4C</td>       
-           <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox" checked> 1,258.36</td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td>
-          <td class="border px-4 py-2 text-left"><input type="checkbox" class="locked-checkbox"></td></td></tr>
+        <script>
+          //BLOCK 6: Lots 1-3, 4A, 4B, 4C
+          for (let i = 1; i <= 3; i++) {
+              document.write(`<tr id="blk6_${i}"></tr>`);
+          }
+          document.write(`<tr id="blk6_4A"></tr>`);
+          document.write(`<tr id="blk6_4B"></tr>`);
+          document.write(`<tr id="blk6_4C"></tr>`);
+
+          (async () => {
+              await loadCSV();
+              build_table_row("blk6_1");
+              build_table_row("blk6_2");
+              build_table_row("blk6_3");
+              build_table_row("blk6_4A");
+              build_table_row("blk6_4B");
+              build_table_row("blk6_4C");
+          })(); 
+          </script>
 
         
         </tbody>
